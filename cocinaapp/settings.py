@@ -26,7 +26,8 @@ SECRET_KEY = 'uc6l8tha746@)zf^(gjhttx_$5)rkx)n6+ew5_qi0@mn8wpt(7'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'127.0.0.1'
+'127.0.0.1',
+'gourmet2.herokuapp.com/'
 ]
 
 
