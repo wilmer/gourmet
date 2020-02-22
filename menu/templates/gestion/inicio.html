@@ -1,0 +1,26 @@
+{% extends 'layout.html'%}
+{% block titulo %}Gestión{% endblock %}
+{% block contenido %}
+
+<section>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3 class="app-titulo-pagina">Gestión</h3>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{% url 'dashboard' %}">Inicio</a>
+                </li>
+                <li class="active">Gestion</li>
+            </ol>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="list-group">
+                        <a href="{% url 'gestion_operador' %}" class="list-group-item">Gestión de operadores</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
