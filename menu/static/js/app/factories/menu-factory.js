@@ -3,18 +3,21 @@
         'BaseFactory'
     ];
     function MenuFactory(BaseFactory) {
-        var turno = [];
+        var menu = [];
         var url = '/api/Menu/';
-        turno.ObtenerMenu = function () {
+        menu.ObtenerMenu = function () {
             return BaseFactory.Obtener(url);
         };
-        turno.GuardarMenu = function (modelo) {
+        menu.GuardarMenu = function (modelo) {
             return BaseFactory.Guardar(url, modelo);
         };
-        turno.EliminarMenu = function (modelo) {
+        menu.EliminarMenu = function (modelo) {
             return BaseFactory.Eliminar(url, modelo);
         };
-        return turno;
+        menu.ActualizarMenu = function (modelo) {
+            return BaseFactory.Guardar(url, modelo);
+        };
+        return menu;
     }
     module.factory('MenuFactory', MenuFactory);
 })(angular.module("app-buenaventura"));

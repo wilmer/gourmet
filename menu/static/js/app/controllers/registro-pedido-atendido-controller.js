@@ -27,14 +27,10 @@ RegistroPedidoAtendidoController.$inject = ["$scope", "toastr", "PedidoAtendidoF
             };
         }
         $scope.Iniciar = function () {
-            //$scope.ResetActividad();
-            //$scope.ObtenerEquipo();
-            //$scope.ObtenerTurno();
-            //$scope.ObtenerMenu();
-            $scope.ObtenerPedidoPendiente();
+
+            $scope.ObtenerPedido();
             $scope.ObtenerRegistroEstadoPedido();
-            //$scope.ObtenerActividad();
-            //$scope.ObtenerAyudante();
+    
         };
         $scope.ObtenerRegistroEstadoPedido = function () {
             RegistroEstadoFactory.ObtenerRegistroEstado().then(function (response) {
@@ -87,7 +83,7 @@ RegistroPedidoAtendidoController.$inject = ["$scope", "toastr", "PedidoAtendidoF
                 toastr.error(MensajeRespuesta.Error, Mensaje.Error.Titulo);
             });
         };
-        $scope.ObtenerPedidoPendiente = function () {
+        $scope.ObtenerPedido = function () {
             PedidoFactory.ObtenerPedido().then(function (response) {
                 $scope.ListaPedidoPendiente = response;
             }).catch(function (error) {

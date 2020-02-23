@@ -53,8 +53,8 @@ class menuAdmin(admin.ModelAdmin):
     list_display = ('id_entrada_1', 'id_entrada_2', 'id_platodefondo_1', 'id_platodefondo_2','id_refresco','id_operador','descripcion_menu','fecha_menu')
 
 class pedidoAdmin(admin.ModelAdmin):
-    search_fields = ['id_menu', 'id_operador', 'id_registroestado', 'fecha_pedido']
-    list_display = ('id_menu', 'id_operador', 'id_registroestado', 'fecha_pedido')
+    search_fields = ['id_menu', 'id_operador', 'id_registroestado', 'fecha_pedido','descripcion_pedido']
+    list_display = ('id_menu', 'id_operador', 'id_registroestado', 'fecha_pedido','descripcion_pedido')
 
 class pedidoatendidoAdmin(admin.ModelAdmin):
     search_fields = ['id_pedido', 'id_operador', 'id_registroestado', 'fecha_atendido']

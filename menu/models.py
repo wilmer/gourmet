@@ -49,8 +49,7 @@ class pedido(models.Model):
     id_operador = models.ForeignKey(operador,on_delete=models.CASCADE, related_name="pedido_operador")
     id_registroestado = models.ForeignKey(registroestado,on_delete=models.CASCADE,related_name="pedido_registroestado")
     fecha_pedido = models.DateField(blank=True, default=date.today)
-    def __str__(self):
-        return(self.id_pedido+" "+self.id_operador)
+    descripcion_pedido = models.CharField(max_length=250, null=True)
 
 class pedidoatendido(models.Model):
     id_pedido=models.ForeignKey(pedido,on_delete=models.CASCADE,related_name="pedidoatendido_pedido")
