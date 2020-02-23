@@ -15,6 +15,11 @@ def registro_diario(request):
     return render(request, 'registro_diario.html', get_user(request))
 
 @decorator_from_middleware(AutenticacionMiddleware)
+def registro_atencion_pedidos(request):
+    return render(request, 'registro_atencion_pedidos.html', get_user(request))
+
+
+@decorator_from_middleware(AutenticacionMiddleware)
 def gestion_inicio(request):
     return render(request, 'gestion/inicio.html', get_user(request))
 

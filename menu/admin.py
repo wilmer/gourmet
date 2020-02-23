@@ -49,12 +49,16 @@ class refrescoAdmin(admin.ModelAdmin):
     list_display = ('descripcion_refresco',)
 
 class menuAdmin(admin.ModelAdmin):
-    search_fields = ['id_entrada_1', 'id_entrada_2', 'id_platodefondo_1', 'id_platodefondo_2','id_refresco','id_operador','fecha_menu']
-    list_display = ('id_entrada_1', 'id_entrada_2', 'id_platodefondo_1', 'id_platodefondo_2','id_refresco','id_operador','fecha_menu')
+    search_fields = ['id_entrada_1', 'id_entrada_2', 'id_platodefondo_1', 'id_platodefondo_2','id_refresco','id_operador','descripcion_menu','fecha_menu']
+    list_display = ('id_entrada_1', 'id_entrada_2', 'id_platodefondo_1', 'id_platodefondo_2','id_refresco','id_operador','descripcion_menu','fecha_menu')
 
 class pedidoAdmin(admin.ModelAdmin):
     search_fields = ['id_menu', 'id_operador', 'id_registroestado', 'fecha_pedido']
     list_display = ('id_menu', 'id_operador', 'id_registroestado', 'fecha_pedido')
+
+class pedidoatendidoAdmin(admin.ModelAdmin):
+    search_fields = ['id_pedido', 'id_operador', 'id_registroestado', 'fecha_atendido']
+    list_display = ('id_pedido', 'id_operador', 'id_registroestado', 'fecha_atendido')
 
 
 admin.site.register(models.operador,operadorAdmin)
@@ -71,3 +75,4 @@ admin.site.register(models.platodefondo,platodefondoAdmin)
 admin.site.register(models.refresco,refrescoAdmin)
 admin.site.register(models.menu,menuAdmin)
 admin.site.register(models.pedido,pedidoAdmin)
+admin.site.register(models.pedidoatendido,pedidoatendidoAdmin)

@@ -48,6 +48,15 @@ class Pedidoserializer(serializers.HyperlinkedModelSerializer):
         model = models.pedido
         fields = ('id','id_menu', 'id_operador', 'id_registroestado','fecha_pedido')
 
+class PedidoAtendidoserializer(serializers.HyperlinkedModelSerializer):
+    id_pedido= serializers.PrimaryKeyRelatedField(many=False, queryset=models.pedido.objects.all())
+    id_operador = serializers.PrimaryKeyRelatedField(many=False, queryset=models.operador.objects.all())
+    id_registroestado = serializers.PrimaryKeyRelatedField(many=False, queryset=models.registroestado.objects.all())
+
+    class Meta:
+        model = models.pedidoatendido
+        fields = ('id','id_pedido', 'id_operador', 'id_registroestado','fecha_atendido')
+
 
 class Detalle_actividadserializer(serializers.HyperlinkedModelSerializer):
     id_actividad = serializers.PrimaryKeyRelatedField(many=False, queryset=models.actividad.objects.all())

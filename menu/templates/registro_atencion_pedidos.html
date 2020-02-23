@@ -1,0 +1,350 @@
+{% extends 'layout.html'%}
+
+{% load static %}
+{% block titulo %}Título{% endblock %}
+{% block contenido %}
+
+<section ng-controller="RegistroPedidoAtendidoController" ng-init="Iniciar()">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3 class="app-titulo-pagina">Registro atención de pedidos</h3>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{% url 'dashboard' %}">Inicio</a>
+                </li>
+                <li class="active">Registro atención de pedido</li>
+            </ol>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <button type="button" class="btn btn-primary" ng-click="CrearPedidoAtendido()">Atender Pedido</button>
+                    <hr>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <b class="panel-title">Pedidos en progreso
+                                <span class="badge" ng-bind="ListaPedido.length"></span>
+                            </b>
+                        </div>
+                        <div class="list-group" ng-repeat="Pedido in ListaPedido">
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading">Fecha del pedido: <span ng-bind="PedidoAtendido.fecha_atendido"></span></h4>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <p class="list-group-item-text">
+                                            <small><b>Operador: </b><span ng-bind="PedidoAtendido.id_operador"></span></small><br>
+                                          <!--  <small><b>Nivel: </b><span ng-bind="Actividad.nivel"></span></small>-->
+                                        </p>
+                                        <br>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <button type="button" class="btn btn-info" ng-click="CrearDetalleActividad(Actividad.id)">Ajustar
+                                            detalles</button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha de actividad</th>
+                                                <th>Descripcion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="DetalleActividad in Actividad.DetallesActividad">
+                                            <tr>
+                                                <td><span ng-bind="Actividad.fecha_actividad"></span></td>
+                                                <td><span ng-bind="DetalleActividad.actividad"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <b class="panel-title">Histórico de pedidos
+                                <span class="badge" ng-bind="ListaPedidoHistorica.length"></span>
+                            </b>
+                        </div>
+                        <div class="list-group" ng-repeat="Actividad in ListaPedidoHistorica">
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading">Fecha del pedido: <span ng-bind="PedidoAtendido.fecha_atendido"></span></h4>
+                                <p class="list-group-item-text">
+                                    <small><b>Operador: </b><span ng-bind="PedidoAtendido.id_operador"></span></small><br>
+                                  <!-- <small><b>Nivel: </b><span ng-bind="Actividad.nivel"></span></small> -->
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="app-modal-actividad">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="panel-title">Atender pedido</span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label>Operador:</label>
+                                        <input type="text" class="form-control" value="{{ nombre }}" readonly="readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pedido:</label>
+                                        <select class="form-control" ng-model="PedidoAtendido.id_pedido" ng-options="elemento.id as elemento.id for elemento in ListaPedido">
+                                            <option value="">[Seleccione]</option>
+                                        </select>
+                                    </div>
+<!--
+                                    <div class="form-group">
+                                        <label>Turno:</label>
+                                        <select class="form-control" ng-model="Actividad.id_turno" ng-options="elemento.id as elemento.descripcion_turno for elemento in ListaTurno">
+                                            <option value="">[Seleccione]</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ayudante:</label>
+                                        <select class="form-control" ng-model="Actividad.id_ayudante" ng-options="elemento.id as elemento.nombre_operador for elemento in ListaAyudante">
+                                            <option value="">[Seleccione]</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Equipo:</label>
+                                        <select class="form-control" ng-model="Actividad.id_equipo" ng-options="elemento.id as elemento.nombre_equipo + ' [' +  elemento.modelo + ']'  for elemento in ListaEquipo">
+                                            <option value="">[Seleccione]</option>
+                                        </select>
+                                    </div>
+-->
+                                    <div class="form-group">
+                                        <label>Fecha del pedido:</label>
+                                        <input type="date" class="form-control" ng-model="PedidoAtendido.fecha_atendido">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Estado:</label>
+                                        <select class="form-control" ng-model="PedidoAtendido.id_registroestado" ng-options="elemento.id as elemento.descripcion_registroestado + ' [' +  elemento.modelo + ']'  for elemento in ListaRegistroEstado">
+                                            <option value="">[Seleccione]</option>
+                                        </select>
+                                    </div>
+                                    <!--
+                                    <div class="form-group">
+                                        <label>Nivel:</label>
+                                        <input type="text" class="form-control" ng-model="Actividad.nivel">
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="text-right">
+                                <button type="button" class="btn btn-default" ng-click="CancelarPedidoAtendido()">Cancelar</button>
+                                <button type="button" class="btn btn-success" ng-click="GuardarPedidoAtendido()">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="app-modal-detalle-actividad">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="panel-title">Registre del detalle de la actividad</span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Descripcion:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.actividad">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Operacion:</label>
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                                <input type="text" class="form-control" ng-model="DetalleActividad.codigo_operacion">
+                                            </div>
+                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                                <input type="text" class="form-control" ng-model="DetalleActividad.descripcion_operacion">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Lugar de origen:</label>
+                                        <select class="form-control" ng-model="DetalleActividad.labor_origen">
+                                            <option value="">[Seleccione]</option>
+                                            <option value="CAMARA">CAMARA</option>
+                                            <option value="SALA DE CAPACITACIÓN ISEM">SALA DE CAPACITACIÓN ISEM</option>
+                                            <option value="VNT. 950">VNT. 950</option>
+                                            <option value="VNT. 044">VNT. 044</option>
+                                            <option value="TJ MIRTHA 11">TJ MIRTHA 11</option>
+                                            <option value="VNT. 170">VNT. 170</option>
+                                            <option value="SALA REPARTO">SALA REPARTO</option>
+                                            <option value="TALLER MINA">TALLER MINA</option>
+                                            <option value="VTN. 134">VTN. 134</option>
+                                            <option value="NV. 4640 TALLER">NV. 4640 TALLER</option>
+                                            <option value="CH. 113">CH. 113</option>
+                                            <option value="SALA REPARTO">SALA REPARTO</option>
+                                            <option value="YERVATEROS">YERVATEROS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Lugar de destino:</label>
+                                        <select class="form-control" ng-model="DetalleActividad.labor_destino">
+                                            <option value="">[Seleccione]</option>
+                                            <option value="VNT.044">VNT.044</option>
+                                            <option value="CAMARA 4640">CAMARA 4640</option>
+                                            <option value="TJ. 300">TJ. 300</option>
+                                            <option value="CAMARA ACUMULACION">CAMARA ACUMULACION</option>
+                                            <option value="VOLQUETES">VOLQUETES</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label>Observaciones:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.observaciones">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Tipo de material:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.tipo_material">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Labor:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.labor_s">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Proyecto:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.proyecto_s">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Número de filas:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.fila_s">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Número de taladros:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.num_taladro_s">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Número de barras:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.num_barras_s">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label><b>Logitud:</b></label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.longitud_s">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Inclinación:</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.inclinacion_s">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Diesel (Inicial):</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.hr_diesel_inicial">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Diesel (Final):</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.hr_diesel_final">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Electricidad (Inicial):</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.hr_electricidad_inicial_s">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label>Electricidad (Final):</label>
+                                        <input type="text" class="form-control" ng-model="DetalleActividad.hr_electricidad_final_s">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="text-right">
+                                <button type="button" class="btn btn-default" ng-click="CancelarDetalleActividad()">Cancelar</button>
+                                <button type="button" class="btn btn-success" ng-click="GuardarDetalleActividad()">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{% block scripts %}
+<script src="{% static 'js/app/factories/turno-factory.js' %}"></script>
+<script src="{% static 'js/app/factories/equipo-factory.js' %}"></script>
+<script src="{% static 'js/app/factories/operador-factory.js' %}"></script>
+<script src="{% static 'js/app/factories/detalle-actividad-factory.js' %}"></script>
+<script src="{% static 'js/app/factories/actividad-factory.js' %}"></script>
+<script src="{% static 'js/app/factories/pedido-atendido-factory.js' %}"></script>
+<script src="{% static 'js/app/controllers/registro-pedido-atendido-controller.js' %}"></script>
+<script src="{% static 'js/app/factories/registroestado-factory.js' %}"></script>
+<script src="{% static 'js/app/factories/pedido-factory.js' %}"></script>
+{% endblock %}

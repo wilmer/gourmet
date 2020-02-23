@@ -32,6 +32,10 @@ class PedidoViewset(viewsets.ModelViewSet):
     queryset = models.pedido.objects.all()
     serializer_class = serializers.Pedidoserializer
 
+class PedidoAtendidoViewset(viewsets.ModelViewSet):
+    queryset = models.pedidoatendido.objects.all()
+    serializer_class = serializers.PedidoAtendidoserializer
+
 
 class Detalle_actividadViewset(viewsets.ModelViewSet):
     queryset = models.detalle_actividad.objects.all()
